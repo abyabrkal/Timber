@@ -182,7 +182,23 @@ int main()
 	// Control the player input
 	bool acceptInput = false;
 
-	
+	// prepare sound
+	SoundBuffer chopBuffer;
+	chopBuffer.loadFromFile("sound/chop.wav");
+	Sound chop;
+	chop.setBuffer(chopBuffer);
+
+	// death
+	SoundBuffer deathBuffer;
+	deathBuffer.loadFromFile("sound/death.wav");
+	Sound death;
+	death.setBuffer(deathBuffer);
+
+	// out of time
+	SoundBuffer ootBuffer;
+	ootBuffer.loadFromFile("sound/out_of_time.wav");
+	Sound outOfTime;
+	outOfTime.setBuffer(ootBuffer);
 
 	while (window.isOpen())
 	{
@@ -205,13 +221,12 @@ int main()
 				spriteAxe.setPosition(2000, spriteAxe.getPosition().y);
 			}
 		}
-
-
-
+			   
 		if (Keyboard::isKeyPressed(Keyboard::Escape))
 		{
 			window.close();
 		}
+
 		if (Keyboard::isKeyPressed(Keyboard::Return))
 		{
 			paused = false;
@@ -266,6 +281,8 @@ int main()
 				// stop chopping
 				acceptInput = false;
 
+				// play chop sound
+				chop.play();
 		
 			}
 
@@ -297,7 +314,8 @@ int main()
 				// stop chopping
 				acceptInput = false;
 
-
+				// play chop sound
+				chop.play();
 			}
 		}
 		/*
@@ -330,6 +348,8 @@ int main()
 					textRect.top + textRect.height / 2.0f);
 				messageText.setPosition(1920 / 2.0f, 1080 / 2.0f);
 
+				// play out of time sound
+				outOfTime.play();
 			}
 
 
@@ -536,8 +556,6 @@ int main()
 
 				// Play the death sound
 				death.play();
-
-
 			}
 
 
