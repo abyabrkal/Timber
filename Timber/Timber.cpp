@@ -138,10 +138,49 @@ int main()
 		branches[i].setOrigin(220, 20);
 	}
 	
-	//updateBranches(4);
-	//updateBranches(2);
-	//updateBranches(1);
-	//updateBranches(5);
+	// Prepare the player
+	Texture texturePlayer;
+	texturePlayer.loadFromFile("graphics/player.png");
+	Sprite spritePlayer;
+	spritePlayer.setTexture(texturePlayer);
+	spritePlayer.setPosition(580, 720);
+
+	// The player starts on the left
+	side playerSide = side::LEFT;
+
+	// prepare gravestone
+	Texture textureRIP;
+	textureRIP.loadFromFile("graphics/rip.png");
+	Sprite spriteRIP;
+	spriteRIP.setTexture(textureRIP);
+	spriteRIP.setPosition(600, 860);
+
+	// Prepare the axe
+	Texture textureAxe;
+	textureAxe.loadFromFile("graphics/axe.png");
+	Sprite spriteAxe;
+	spriteAxe.setTexture(textureAxe);
+	spriteAxe.setPosition(700, 830);
+
+	// Line the axe up with the tree
+	const float AXE_POSITION_LEFT = 700;
+	const float AXE_POSITION_RIGHT = 1075;
+
+	// Prepare the flying log
+	Texture textureLog;
+	textureLog.loadFromFile("graphics/log.png");
+	Sprite spriteLog;
+	spriteLog.setTexture(textureLog);
+	spriteLog.setPosition(810, 720);
+
+	// Some other useful log related variables
+	bool logActive = false;
+	float logSpeedX = 1000;
+	float logSpeedY = -1500;
+
+	// Control the player input
+	bool acceptInput = false;
+
 
 	while (window.isOpen())
 	{
@@ -161,6 +200,19 @@ int main()
 			// reset the time and score
 			score = 0;
 			timeRemaining = 5;
+			
+			// make all branches disapper
+			for (int i = 0; i < NUM_BRANCHES; i++)
+			{
+				branchPositions[i] = side::NONE;
+			}
+
+			// Make sure the gravestone is hidden
+			spriteRIP.setPosition(675, 2000);
+
+			// move player into position
+			spritePlayer.setPosition(580, 720);
+			acceptInput = true;
 		}
 
 		/*
@@ -377,6 +429,19 @@ int main()
 		}
 		// draw tree
 		window.draw(spriteTree);
+
+		// draw player
+		window.draw(spritePlayer);
+
+		// draw axe
+		window.draw(spriteAxe);
+
+		// draw flying log
+		window.draw(spriteLog);
+
+		// draw gravestone
+		window.draw(spriteRIP);
+
 		// draw bee
 		window.draw(spriteBee);
 
